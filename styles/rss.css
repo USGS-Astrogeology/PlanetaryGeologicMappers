@@ -1,0 +1,59 @@
+/**
+ *  * Stylesheet for jquery rss feed
+ *   */
+
+.rssFeed {
+-webkit-border-radius:0;
+-moz-border-radius:0;
+border-radius:0;
+padding:1em;
+margin:0;
+position:relative;
+z-index:5;
+height:100%;
+background:#000;
+font-family:"Trebuchet MS",sans-serif;
+}
+
+.indexContent {
+height:auto !important;
+}
+
+#sidebar {
+height:504px;
+position:relative;
+left:-10px;
+margin:-63px 0 0;
+}
+
+.rssFeed * {
+margin:0;
+padding:0;
+color:#FFF;
+}
+
+.rssFeed ul {
+list-style:none;
+}
+
+.rssFeed li {
+padding-bottom:.2em;
+margin-bottom:1em;
+border-bottom:1px solid #FFF;
+}
+
+.rssFeed a {
+color:#6AF;
+font-size:1.3em;
+padding-bottom:.1em;
+text-decoration:none;
+}
+
+.rssFeed a:hover {
+color:#8CF;
+}
+
+.overlay {
+z-index:10;
+position:relative;
+}

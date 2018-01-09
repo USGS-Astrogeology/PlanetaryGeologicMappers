@@ -1,0 +1,199 @@
+#errors {
+  background-color:     #ccc;
+	color:             #f8100f;
+/*  border: 2px dotted #191919;*/
+	font-weight:          bold;
+	text-align:           left;
+	vertical-align:     middle;
+	top:                  10px;
+	right:                10px;
+	bottom:               10px;
+	left:                 10px;
+}
+
+
+input.required, textarea.required, div.required {
+  border: 1px solid #971616; 
+}
+
+select.required {
+  background-color: #FFC2C2;
+}
+
+th {
+  vertical-align: top;
+  text-align:  left;
+  margin-right:  10px;
+  padding-right: 10px;
+}
+
+td.id_column {
+  text-align:  left;
+  margin-right:  5px;
+  padding-right: 5px;
+}
+
+
+span.h1 { 
+  font-weight: bold;
+  font-size: 2em; 
+  margin: .67em 0;
+}
+span.h2 { 
+  font-weight: bold;
+  font-size: 1.5em; 
+  margin: .75em 0; 
+}
+span.h3  { 
+  font-weight: bold;
+  font-size: 1.17em; 
+  margin: .83em 0;
+}
+
+.comments {
+  padding-left: 8px;
+  padding-top: 10px;
+  margin-top: 1.2em;
+}
+
+.details {
+  float: right;
+  vertical-align: text-top;
+  width: 400px;
+}
+
+.milestone {
+  font-weight: normal;
+  font-size: 1.0em;
+}
+
+.comment-title {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1.0em;
+}
+
+.comment-body {
+  font-weight: normal;
+  font-size: 1.0em;
+  padding-left: 8px;
+}
+
+div.overlay {
+  color:#FFF;
+  background:#333;
+  top:0;
+  left:0;
+  opacity:.85;
+  filter:alpha(opacity=85); /* For IE8 and earlier */
+  right:0;
+  z-index:1;
+  padding:5px 10px 5px 25px;
+  /*
+  margin-top:20px;
+  */
+}
+
+div.overlayHeader {
+  font-size:1.8em;
+  margin-bottom:3px;
+}
+
+div.overlayText {
+  font-size:1em;
+  line-height:125%;
+}
+
+div.overlay a {
+  text-decoration:none;
+  color:#FFF;
+}
+
+#underBanner {
+  margin-top:17px;
+  border:1px solid #555;
+  height:274px;
+  width:600px !important;
+  border-bottom-left-radius:6px;
+  -moz-border-bottom-left-radius:6px 0;
+  -webkit-border-bottom-left-radius:6px;
+  background:#FFF;
+}
+
+.verticalColumn {
+  float:left;
+  width:149px;
+  overflow:hidden;
+  border-right:1px solid #555;
+  height:274px;
+}
+
+.verticalColumn a {
+  text-decoration:none;
+  color:#666;
+}
+
+.verticalColumn:hover, .verticalColumn a:hover {
+  background-color:#DDD;
+}
+
+#lastColumn {
+  border-right:0;
+  width:150px;
+}
+
+.verticalColumn .verticalTitle,
+.verticalColumn .verticalContent,
+.verticalColumn a {
+  padding:0 5px;
+}
+
+.verticalColumn .verticalTitle {
+  font-size:14px;
+  text-transform:uppercase;
+  padding-top:20px;
+  padding-bottom:5px;
+  color:#06C;
+}
+
+.verticalColumn .verticalContent {
+  padding-top:5px;
+  height:157px;
+  position:relative;
+}
+
+.readmore {
+  bottom:25px;
+  position:absolute;
+}
+
+.indexContent {
+  bottom: 0;
+  margin: 0;
+  padding: 5px;
+  right: 0;
+  top: 0;
+  height: 678px;
+}
+
+.sidebar {
+  bottom: 0;
+  margin: 0;
+  padding: 20px;
+  right: 0;
+  top: 0;
+  height: 678px;
+  width: 290px;
+}
+
+.news {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+div#astroConsoleKey {
+  width: 200px;
+}

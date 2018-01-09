@@ -1,0 +1,33 @@
+/* IE.. what are u going to do.. */
+
+#layout_content_middle_right_header {
+ /* background-color: red;*/   /* Just to be sure that this css is being included correctly*/
+}
+
+#search_button {
+  padding-top: 3px; /** Fixes the search button and text box not aligning correctly */
+}
+
+div.menu_item {
+  padding-left: 20px; /** this gets the spacing at least tolerable */
+}
+
+div.menu_item span {
+  padding-left: 12px; /** this gets the spacing at least tolerable */
+}
+
+ul.rss_items {
+  margin-left: 10px; /** IE defaults to 30px!? */
+}
+
+ol {
+  padding-left: 20px;
+}
+ol li {
+  margin-bottom: 3px;
+  margin-left:   8px;
+}
+
+#simple_search_box {
+  width: 170px;
+}
