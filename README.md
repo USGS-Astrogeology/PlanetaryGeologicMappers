@@ -1,5 +1,7 @@
 # PlanetaryGeologicMappers
 
+[![Join the chat at https://gitter.im/USGS-Astrogeology/PlanetaryGeologicMappers](https://badges.gitter.im/USGS-Astrogeology/PlanetaryGeologicMappers.svg)](https://gitter.im/USGS-Astrogeology/PlanetaryGeologicMappers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The web site for the planetary geologic mappers (PGM).  The website includes static content
 with resources for mappers and current status of mapping projects including GIS footprints.
 
