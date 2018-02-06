@@ -1,7 +1,7 @@
 #errors {
   background-color:     #ccc;
 	color:             #f8100f;
-/*  border: 2px dotted #191919;*/
+  /* border: 2px dotted #191919; */
 	font-weight:          bold;
 	text-align:           left;
 	vertical-align:     middle;
@@ -13,7 +13,7 @@
 
 
 input.required, textarea.required, div.required {
-  border: 1px solid #971616; 
+  border: 1px solid #971616;
 }
 
 select.required {
@@ -34,19 +34,19 @@ td.id_column {
 }
 
 
-span.h1 { 
+span.h1 {
   font-weight: bold;
-  font-size: 2em; 
+  font-size: 2em;
   margin: .67em 0;
 }
-span.h2 { 
+span.h2 {
   font-weight: bold;
-  font-size: 1.5em; 
-  margin: .75em 0; 
+  font-size: 1.5em;
+  margin: .75em 0;
 }
-span.h3  { 
+span.h3  {
   font-weight: bold;
-  font-size: 1.17em; 
+  font-size: 1.17em;
   margin: .83em 0;
 }
 
