@@ -1,0 +1,8 @@
+flask
+flask-sqlalchemy
+geoalchemy2
+gdal
+shapely
+geojson
+psycopg2
+pymongo

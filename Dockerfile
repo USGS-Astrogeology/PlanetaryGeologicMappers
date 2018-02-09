@@ -1,6 +1,7 @@
 FROM usgsastro/miniflask
 ADD . /app
+ADD requirements.txt /app
 WORKDIR /app
-RUN conda install -c conda-forge flask flask-sqlalchemy geoalchemy2 gdal shapely geojson psycopg2 pymongo
-
+RUN pip install -r requirements.txt
+RUN pip install https://github.com/cameronbwhite/Flask-CAS/archive/v1.0.1.zip
 CMD ['python','pgm.py']
