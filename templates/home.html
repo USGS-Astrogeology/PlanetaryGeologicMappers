@@ -1,144 +1,96 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=IE8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Geologic Mapping: Project Details</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/base.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/content.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/menu.css') }}">
-    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static',filename='js/menu.js') }}"></script>
-    <!-- <script type="text/javascript" src="/js/jquery.BgImageTranslation.js"></script> -->
-
-    <!--[if IE]>
-      <link rel="stylesheet" type="text/css" href="/styles/ie.css"/>
-    <![endif]-->
-
-    <script>
-      $(document).ready(function(){
-        $("#main_menu").superfish({
-          delay:       800,
-          autoArrows: false,
-          dropShadows: false,
-          speed: 'fast'
-        });
-        // if there is only one child then there are no sub menus, then dont display the arrow background image.
-        $('li li.has_children').each(function(index){
-          if( $(this).children()[1] == null) {
-            $(this).css({'background':'transparent'});
-          }
-        });
-      });
-    </script>
-
-
-  <link href='{{ url_for('static',filename='styles/rss.css') }}' rel='stylesheet' type='text/css' />
-  <!-- <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.rss.js') }}"></script> -->
-
-    <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
-  </head>
-  <body>
-    {% block content %}
-    {% include 'header.html' %}
-    <div id="main">
-      <div id="wrapper">
-        <div id="content">
-          <div id="homeContent">
-          <table>
-          <tbody>
-          <tr><td>
-            <div id="indexContent" class="indexContent">
-            <div id="banner" class="banner" style="width:600px; height:274px; background-image:url('/static/images/layout/pgm_banner_600x274.png')">
-              <div id="overlay" class="overlay">
-                <div class="overlayHeader">Planetary Geologic Mapping Program</div>
-                <div class="overlayText">The Planetary Geologic Mapping Program serves the international science community
-                through the production of high-quality and refereed geologic maps of planetary bodies. This program is in
-                coordination between NASA science programs and the USGS Astrogeology Science Center.</div>
-              </div>
-            </div>
-
-          <div id="underBanner" class="">
-            <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Review';">
-              <div class="verticalTitle">
-                geologic maps
-              </div>
-              <div class="verticalImage">
-                <img src="{{url_for('static', filename = 'images/layout/map_button_150x86.png')}}">    </div>
-              <div class="verticalContent">
-                Peruse information on current USGS-supported planetary mapping projects as well as past maps . . .
-                <br>
-                <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
-              </div>
-            </div>
-
-            <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Guidelines';">
-              <div class="verticalTitle">
-                guidelines
-              </div>
-              <div class="verticalImage">
-                <img src="{{url_for('static', filename = 'images/layout/guidelines_button_150x86.png')}}">    </div>
-              <div class="verticalContent">
-                Search recommendations to assist with mapping, reviewing, and publishing planetary geologic maps . . .
-                <br>
-                <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
-              </div>
-            </div>
-
-            <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Resources';">
-              <div class="verticalTitle">
-                resources
-              </div>
-              <div class="verticalImage">
-                <img src="{{url_for('static', filename = 'images/layout/tutorial_button_150x86.png')}}" style="height:86px;">    </div>
-              <div class="verticalContent">
-                Leverage technical resources to improve the cartographic quality and timely production . . .
-                <br>
-                <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
-              </div>
-            </div>
-
-            <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Milestones';">
-              <div class="verticalTitle">
-                milestones
-              </div>
-              <div class="verticalImage">
-                <img src="{{url_for('static', filename = 'images/layout/manager_button_150x86.png')}}">    </div>
-              <div class="verticalContent">
-                Examine workflow milestones for USGS-published geologic maps . . .
-                <br>
-                <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
-              </div>
-            </div>
+<div id="main">
+  <div id="wrapper">
+    <div id="content">
+      <div id="homeContent">
+      <table>
+      <tbody>
+      <tr><td>
+        <div id="indexContent" class="indexContent">
+        <div id="banner" class="banner" style="width:600px; height:274px; background-image:url('/static/images/layout/pgm_banner_600x274.png')">
+          <div id="overlay" class="overlay">
+            <div class="overlayHeader">Planetary Geologic Mapping Program</div>
+            <div class="overlayText">The Planetary Geologic Mapping Program serves the international science community
+            through the production of high-quality and refereed geologic maps of planetary bodies. This program is in
+            coordination between NASA science programs and the USGS Astrogeology Science Center.</div>
           </div>
-          </div>
-          </td>
-          <td>
-          <div id="sidebar" class="sidebar">
-              <div id="overlay" class="overlay">
-                <div class="overlayHeader">News</div>
-              </div>
-            <div id="rssFeed" class="news"></div>
-          </div>
-          </td></tr>
-          </tbody>
-          </table>
-          </div>
+        </div>
 
-          <script type="text/javascript">
-          $(document).ready(function () {
-            $('#rssFeed').rss('https://astrogeology.usgs.gov/rss?cat=pgm', { limit: 5, ssl: true,
-              entryTemplate: '<li><a href="{url}">{title}</a><br/>{shortBodyPlain}</li>' });
-          });
-          </script>
+      <div id="underBanner" class="">
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Review';">
+          <div class="verticalTitle">
+            geologic maps
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/map_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Peruse information on current USGS-supported planetary mapping projects as well as past maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
 
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Guidelines';">
+          <div class="verticalTitle">
+            guidelines
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/guidelines_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Search recommendations to assist with mapping, reviewing, and publishing planetary geologic maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
 
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Resources';">
+          <div class="verticalTitle">
+            resources
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/tutorial_button_150x86.png')}}" style="height:86px;">    </div>
+          <div class="verticalContent">
+            Leverage technical resources to improve the cartographic quality and timely production . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
+
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Milestones';">
+          <div class="verticalTitle">
+            milestones
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/manager_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Examine workflow milestones for USGS-published geologic maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
         </div>
       </div>
-      <img src="{{url_for('static', filename = 'images/layout/white-box-bottom.png')}}" />
+      </div>
+      </td>
+      <td>
+      <div id="sidebar" class="sidebar">
+          <div id="overlay" class="overlay">
+            <div class="overlayHeader">News</div>
+          </div>
+        <div id="rssFeed" class="news"></div>
+      </div>
+      </td></tr>
+      </tbody>
+      </table>
+      </div>
+
+      <script type="text/javascript">
+      $(document).ready(function () {
+        $('#rssFeed').rss('https://astrogeology.usgs.gov/rss?cat=pgm', { limit: 5, ssl: true,
+          entryTemplate: '<li><a href="{url}">{title}</a><br/>{shortBodyPlain}</li>' });
+      });
+      </script>
+
+
     </div>
-    {% include 'footer.html' %}
-    {% endblock %}
-  </body>
-</html>
+  </div>
+  <img src="{{url_for('static', filename = 'images/layout/white-box-bottom.png')}}" />
+</div>
