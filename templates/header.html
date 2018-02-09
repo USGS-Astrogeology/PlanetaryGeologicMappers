@@ -1,0 +1,41 @@
+<body>
+  <div id="logo">
+     <img src="{{ url_for('static',filename='images/layout/usgs-logo.gif') }}" />
+     <img src="{{ url_for('static',filename='images/layout/nasa_logo.png') }}" style="height:77px;" />
+  </div>
+
+  <div id="usgs-nav">
+    <div id="usgs-nav-background">
+      <img src="{{ url_for('static',filename='images/layout/usgs-nav-background.png') }}" />
+    </div>
+    <div id="usgs-nav-links">
+      <a class="usgs-nav-link" href="http://www.usgs.gov">Home</a>
+      <a class="usgs-nav-link" href="http://www.usgs.gov/ask">Contact</a>
+      <a class="usgs-nav-link" href="http://search.usgs.gov">Search</a>
+    </div>
+  </div>
+
+  <div id="main-nav">
+    <div id="astro-title">
+      <img src="{{ url_for('static',filename='images/layout/geologicmapping-name.png') }}" />
+    </div>
+    <div id="main-nav-background">
+      <ul id="main_menu">
+        <li><a href='/'>Home</a></li> <!-- TODO: this mouse over needs to be a tad different because of the corner -->
+        <li>
+          <a href='#'>Maps</a>
+          <ul>
+            {% block content %}
+            {% for map in header_dict.maps %}
+              <li><a href="/Target/project/{{ map }}">{{ map }}</a></li>
+            {% endfor %}
+            <li><a href="/Project">All</a></li>
+          </ul>
+        </li>
+        {% for page in header_dict.pages %}
+          <li><a href="/Page/view/{{ page }}">{{ page }}</a></li>
+        {% endfor %}
+        {% endblock %}
+      </ul>
+    </div>
+  </div>
