@@ -1,0 +1,96 @@
+<div id="main">
+  <div id="wrapper">
+    <div id="content">
+      <div id="homeContent">
+      <table>
+      <tbody>
+      <tr><td>
+        <div id="indexContent" class="indexContent">
+        <div id="banner" class="banner" style="width:600px; height:274px; background-image:url('/static/images/layout/pgm_banner_600x274.png')">
+          <div id="overlay" class="overlay">
+            <div class="overlayHeader">Planetary Geologic Mapping Program</div>
+            <div class="overlayText">The Planetary Geologic Mapping Program serves the international science community
+            through the production of high-quality and refereed geologic maps of planetary bodies. This program is in
+            coordination between NASA science programs and the USGS Astrogeology Science Center.</div>
+          </div>
+        </div>
+
+      <div id="underBanner" class="">
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Review';">
+          <div class="verticalTitle">
+            geologic maps
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/map_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Peruse information on current USGS-supported planetary mapping projects as well as past maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
+
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Guidelines';">
+          <div class="verticalTitle">
+            guidelines
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/guidelines_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Search recommendations to assist with mapping, reviewing, and publishing planetary geologic maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
+
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Resources';">
+          <div class="verticalTitle">
+            resources
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/tutorial_button_150x86.png')}}" style="height:86px;">    </div>
+          <div class="verticalContent">
+            Leverage technical resources to improve the cartographic quality and timely production . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
+
+        <div class="verticalColumn" style="cursor:pointer;" onclick="location.href='/Page/view/Milestones';">
+          <div class="verticalTitle">
+            milestones
+          </div>
+          <div class="verticalImage">
+            <img src="{{url_for('static', filename = 'images/layout/manager_button_150x86.png')}}">    </div>
+          <div class="verticalContent">
+            Examine workflow milestones for USGS-published geologic maps . . .
+            <br>
+            <img src="{{url_for('static', filename = 'images/layout/readmore_button.png')}}" class="readmore">
+          </div>
+        </div>
+      </div>
+      </div>
+      </td>
+      <td>
+      <div id="sidebar" class="sidebar">
+          <div id="overlay" class="overlay">
+            <div class="overlayHeader">News</div>
+          </div>
+        <div id="rssFeed" class="news"></div>
+      </div>
+      </td></tr>
+      </tbody>
+      </table>
+      </div>
+
+      <script type="text/javascript">
+      $(document).ready(function () {
+        $('#rssFeed').rss('https://astrogeology.usgs.gov/rss?cat=pgm', { limit: 5, ssl: true,
+          entryTemplate: '<li><a href="{url}">{title}</a><br/>{shortBodyPlain}</li>' });
+      });
+      </script>
+
+
+    </div>
+  </div>
+  <img src="{{url_for('static', filename = 'images/layout/white-box-bottom.png')}}" />
+</div>
