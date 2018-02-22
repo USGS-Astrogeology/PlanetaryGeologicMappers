@@ -1,10 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-
-<script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js') }}"> </script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
-
-
 <html>
 {% block content %}
 {% include 'head.html' %}
@@ -52,7 +46,6 @@
                    + "</tr>";
             $('#data').append(row);
 	}
-        $.noConflict();
 	$('#data').DataTable();
     }
     });
