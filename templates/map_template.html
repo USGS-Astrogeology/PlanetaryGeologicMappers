@@ -35,6 +35,7 @@
     url : "{{url_for('static',filename='json/'+body+'.json')|safe}}", 
     success : function(result){
         json = JSON.parse(result);
+        $('#data').append('<tbody>')
 	for (var i = 0; i < json.features.length; i++){
 	      var row = "<tr>"
                    + "<td>" + json.features[i].name+ "</td>"
@@ -47,6 +48,7 @@
             $('#data').append(row);
 	}
 	$('#data').DataTable();
+        $('#data').append('</tbody>')
     }
     });
     });
