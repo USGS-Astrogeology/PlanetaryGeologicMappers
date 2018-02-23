@@ -1,11 +1,17 @@
-web:
-  build: .
-  command: python -u pgm.py
-  ports:
-    - "8080:8080"
-  volumes:
-    - .:/test
-  links:
-    - db
-db:
-  image: mongo:3.6.2
+version: '3'
+services:
+  web:
+    environment:
+      - PYTHONUNBUFFERED=1
+    build: .
+    command: python -u pgm.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/test
+    links:
+      - db
+  db:
+    image: mongo:3.6.2
+    ports:
+      - '27017:27017'

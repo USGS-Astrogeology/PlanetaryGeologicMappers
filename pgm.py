@@ -4,13 +4,14 @@ from datetime import datetime
 from flask import Flask, abort, flash, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
 
-client = MongoClient(
-  os.environ['DB_PORT_27017_TCP_ADDR'], 27017)
+client = MongoClient('localhost', 27017)
+
 db = client.pgmdb
 
-WSApp = Flask(__name__, instance_relative_config=True)
-WSApp.debug=True
-WSApp.config.from_pyfile('config.py')
+#WSApp = Flask(__name__, instance_relative_config=True)
+#WSApp.debug=True
+#WSApp.config.from_pyfile('config.py')
+WSApp = Flask(__name__)
 
 map_list = ['Venus', 'Mars', 'Mercury', 'Moon', 'Europa',
             'Enceladus', 'Ganymede', 'Io', 'Vesta']

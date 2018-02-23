@@ -8,6 +8,15 @@
     <div id="content">
       <div id="homeContent">
         <h1>NEW PAGE FOR MAP WITH TARGET {{body}}</h1>
+	    <table id="data">
+	      <thead>
+		<th>Project Name</th>
+		<th>Target</th>
+		<th>Scale</th>
+		<th>Author</th>
+		<th>Status</th>
+	      </thead>
+	    </table>
       </div>
     </div>
   </div>
@@ -16,3 +25,29 @@
 {% include 'footer.html' %}
 {% endblock %}
 </html>
+
+<script>
+  var json;
+    //url = "http://astrocloud-dev.wr.usgs.gov/dataset/data/pgm/{{body}}/WFS?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json"
+  $(document).ready(function(){
+    $.ajax({
+    type : 'GET',
+    url : "{{url_for('static',filename='json/'+body+'.json')|safe}}", 
+    success : function(result){
+        json = JSON.parse(result);
+	for (var i = 0; i < json.features.length; i++){
+	      var row = "<tr>"
+                   + "<td>" + json.features[i].name+ "</td>"
+                   + "<td>" +" " + "</td>"
+                   + "<td>" +" " + "</td>"
+			    + "<td>" + json.features[i].properties['Author Last Name']+ ", "
+			    + json.features[i].properties['Author First Name']+ "</td>"
+                   + "<td>" + json.features[i].properties.Status + "</td>"
+                   + "</tr>";
+            $('#data').append(row);
+	}
+	$('#data').DataTable();
+    }
+    });
+    });
+</script>

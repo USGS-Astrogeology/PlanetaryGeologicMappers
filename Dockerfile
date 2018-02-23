@@ -1,6 +1,6 @@
 FROM usgsastro/miniflask
 ADD . /app
+ADD requirements.txt /app
 WORKDIR /app
-RUN conda install -c conda-forge flask flask-sqlalchemy geoalchemy2 gdal shapely geojson psycopg2 pymongo
-
+RUN conda install flask geojson pymongo
 CMD ['python','pgm.py']
