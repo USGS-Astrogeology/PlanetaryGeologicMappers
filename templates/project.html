@@ -1,0 +1,231 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+  <html>
+    {% block content %}
+    {% include 'head.html' %}
+    {% include 'header.html' %}
+    <head>
+      <script>
+        $(document).ready(function(){
+          $("#main_menu").superfish({
+            delay:       800,
+            autoArrows: false,
+            dropShadows: false,
+            speed: 'fast'
+          });
+          // if there is only one child then there are no sub menus, then dont display the arrow background image.
+          $('li li.has_children').each(function(index){
+            if( $(this).children()[1] == null) {
+              $(this).css({'background':'transparent'});
+            }
+          });
+        });
+      </script>
+
+
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/Layers/maps.js"></script>
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/console.css" type="text/css" />
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/ol.css" type="text/css" />
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/ol/OpenLayers-2.10/OpenLayers.js"></script>
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/js/AstroWebMaps.js"></script>
+
+    <script type="text/javascript">
+      // AJAX for comments
+      function handler_for_ajax_comments (xml_data) {
+        var element = $(xml_data);
+        $('#ajax_comments').html($(xml_data));
+      }
+      function load_comments () {
+
+
+        $.get("/Comment/pubs/256", handler_for_ajax_comments);
+
+      }
+    </script>
+
+      <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
+    </head>
+    <div id="main">
+      <div id="wrapper" style="float: left">
+	<div id="content" style="float: left">
+	  <div id="homeContent">
+
+	    
+    <h2 id="projectTitle"></h2>
+    <div id="errors">
+
+
+    </div>
+
+  <div> <!-- Gratuitous div to fix layout problem -->
+
+
+  <div>
+  <div style='float: left;'>
+    <div class="astroConsole" style='width:500px;float:left;'>
+      <div id="astroConsoleTargetInfo"></div>
+      <div id="astroConsoleProjectionButtons"></div>
+      <div id="astroConsoleLonLatSelects"></div>
+      <div id="astroConsoleKey"></div>
+      <img class="astroConsoleBackground" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/images/console.png"/>
+    </div>
+
+    <div id="mapContainer" style="width:500px;height:480px">
+      <div id="map" class="astroMap" style="width:500px;height:400px"></div>
+    </div>
+
+    <div id="ajax_comments" class="comments"></div>
+
+  </div>
+
+  <div class="details">
+    <h3>Project Details</h3>
+    <table>
+      <tr>
+        <th>Map Title (Complete) or Region (Active)</th>
+        <td id="mapTitle"> </td>
+      </tr>
+      <tr>
+        <th>Quad Number</th>
+        <td id="quadNumber"> </td>
+      </tr>
+      <tr>
+        <th>USGS Map Series Number</th>
+        <td id="mapSeriesNumber"></td>
+      </tr>
+      <tr>
+        <th>URL to Published Map</th>
+        <td id="urlToPublication">&nbsp;</td>
+      </tr>
+      <tr>
+        <th>Start Date</th>
+        <td id="startDate"> </td>
+      </tr>
+      <tr>
+        <th>Scale</th>
+        <td id="scale"> </td>
+      </tr>
+      <tr>
+        <th>Map Projection</th>
+        <td id="mapProjection"> </td>
+      </tr>
+      <tr>
+        <th>Resolution of Base Image</th>
+        <td id="baseImageResolution"> </td>
+      </tr>
+      <tr>
+        <th>Base Map Data Source</th>
+        <td id="baseMapDataSource"> </td>
+      </tr>
+      <tr>
+        <th>Author</th>
+        <td id="author"> </td>
+      </tr>
+
+    </table>
+    </div>
+    </div>
+    <script type="text/javascript">
+    // AstroWebMaps related
+    function initmap() {
+      var target = 'Mars';
+      var upperTarget = target.toUpperCase();
+
+      var consoleSettings = {
+        target: upperTarget,
+        projButtons: true,
+        lonLatSelects: true,
+        mouseLonLat: true
+      };
+
+      var mapSettings = {
+        mapDiv: 'map',
+        target: upperTarget,
+        projection: 'cylindrical',
+        showNomenclature: false,
+        datelineWrap: true,
+        polygonLayerName: 'Mapping Extent',
+        imagePath: 'https://astrowebmaps.wr.usgs.gov/webmapatlas/images/',
+        defaultZoomLevel: 5,
+        defaultCenterLat: 0,
+        defaultCenterLon: 0
+      };
+
+      var controlSettings = {
+        zoomBar: true,
+        layerSwitcher: true,
+        graticule: true,
+        featureSearch: false,
+        scaleLine: true,
+        overviewMap: true,
+        mousePosition: true,
+        zoomButton: true,
+        boundingBoxDrawer: false,
+        homeButton: true,
+        selectButton: true,
+	resizeGeometryButton: false,
+        reshapeGeometryButton: false,
+        editCenterPointButton: false,
+        transformGeometryButton: false,
+        editGeometryButton: 'none',
+        defaultControl: "select"
+      };
+
+      var astroMap = new AstroMap(mapSettings, controlSettings, consoleSettings, null);
+
+      <!-- Draw Polygon -->
+          astroMap.vectorDrawer.drawAndStore('MULTIPOLYGON (((157.5 0, 157.5 -1, 157.5 -2, 157.5 -3, 157.5 -4, 157.5 -5, 157.5 -6, 157.5 -7, 157.5 -8, 157.5 -9, 157.5 -10, 157.5 -11, 157.5 -12, 157.5 -13, 157.5 -14, 157.5 -15, 156.52173913043478 -15, 155.54347826086956 -15, 154.56521739130434 -15, 153.58695652173913 -15, 152.6086956521739 -15, 151.6304347826087 -15, 150.65217391304347 -15, 149.67391304347825 -15, 148.69565217391303 -15, 147.7173913043478 -15, 146.7391304347826 -15, 145.76086956521738 -15, 144.78260869565216 -15, 143.80434782608694 -15, 142.82608695652172 -15, 141.8478260869565 -15, 140.86956521739128 -15, 139.89130434782606 -15, 138.91304347826085 -15, 137.93478260869563 -15, 136.9565217391304 -15, 135.9782608695652 -15, 135 -15, 135 -14, 135 -13, 135 -12, 135 -11, 135 -10, 135 -9, 135 -8, 135 -7, 135 -6, 135 -5, 135 -4, 135 -3, 135 -2, 135 -1, 135 0, 135.97826086956522 0, 136.95652173913044 0, 137.93478260869566 0, 138.91304347826087 0, 139.8913043478261 0, 140.8695652173913 0, 141.84782608695653 0, 142.82608695652175 0, 143.80434782608697 0, 144.7826086956522 0, 145.7608695652174 0, 146.73913043478262 0, 147.71739130434784 0, 148.69565217391306 0, 149.67391304347828 0, 150.6521739130435 0, 151.63043478260872 0, 152.60869565217394 0, 153.58695652173915 0, 154.56521739130437 0, 155.5434782608696 0, 156.5217391304348 0, 157.5 0)))', null, 'green', 'footprint', true, false);
+          astroMap.console.addKey('Mapping Extent', 'green');
+
+
+    }
+    </script>
+
+    <script type="text/javascript">
+      // When the document is ready, get comments and initialize map
+      // $(document).ready(function() {
+      window.onload = function() {
+        load_comments();
+        initmap();
+      };
+    </script>
+
+<script>
+    // url = "http://astrocloud-dev.wr.usgs.gov/dataset/data/pgm/all/WFS?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json&id={{id}}"
+    // @TODO when we get the xss working, we'll need to swap in this URL and get rid of the references to id since it'll only return a single project
+  $(document).ready(function(){
+    $.ajax({
+    type : 'GET',
+    url : "{{url_for('static',filename='json/All.json')|safe}}", 
+    success : function(result){
+	var json = JSON.parse(result);
+        var url2pub = json.features[{{id}}].properties['Online Publication'];
+
+        $(projectTitle).append(json.features[{{id}}].name)
+        $(mapTitle).append(json.features[{{id}}].name)
+        $(mapSeriesNumber).append(json.features[{{id}}].properties['USGS Number'])
+
+	if (url2pub == "None"){
+          $(urlToPublication).append(url2pub);
+	}else{
+          $(urlToPublication).append($('<a href="'+ url2pub +'">'+ url2pub+'</a>'));
+	}
+
+        $(mapProjection).append(json.features[{{id}}].properties.Projection)
+	var authorName = json.features[{{id}}].properties['Author Last Name'] +
+                      ", " +
+                      json.features[{{id}}].properties['Author First Name'];
+        $(author).append(authorName)
+    }
+    });
+    });
+</script>
+
+
+    
+     	  </div>
+	</div>
+      </div>
+    </div>
+  {% include 'footer.html' %}
+  {% endblock %}
+  </html>

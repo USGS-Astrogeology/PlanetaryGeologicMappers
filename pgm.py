@@ -35,6 +35,10 @@ def mapHandler(body):
 def mapAllHandler():
     return render_template('map_template.html', body = 'All', header_dict = header_dict)
 
+@WSApp.route("/Project/view/<id>")
+def projectHandler(id):
+    return render_template('project.html', id = id, header_dict = header_dict)
+
 if __name__ == "__main__":
   # @TODO probably need to remove host arg for production code, but it's
   #  necessary for local testing.
