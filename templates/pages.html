@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+{% block content %}
+{% include 'head.html' %}
+{% include 'header.html' %}
+<table>
+  <tr>
+    <th>Page</th>
+    <th>
+      <div align="center">
+          Edit
+      </div>
+    </th>
+    <th>
+      <div align="center">
+          Remove
+      </div>
+    </th>
+  </tr>
+  {% for entry in entries %}
+  <form class="page"  id="page_{{ entry }}">
+    <input type="hidden" name="page" value="{{ entry }}" />
+  </form>
+  <tr>
+    <td>
+      {{ entry }}
+    </td>
+    <td>
+      <div align="center">
+        <a href="/admin/{{ entry }}">edit</a>
+      </div>
+    </td>
+    <td>
+      <button type="submit" class="removeButton"
+              form="page_{{ entry }}" formaction="{{ url_for('removePage') }}"
+              formmethod="post">
+              Remove
+      </button>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div>
+  <a href="/admin/new">New Page</a>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+</html>
