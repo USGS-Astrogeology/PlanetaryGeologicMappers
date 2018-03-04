@@ -14,4 +14,4 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - .pgmdb/:/data/db
+      - ./pgmdb:/data/db/
