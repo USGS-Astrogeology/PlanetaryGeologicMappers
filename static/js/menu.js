@@ -149,7 +149,7 @@
     }).each(function() {
       var menuClasses = [c.menuClass];
       // if (sf.op.dropShadows  && !($.browser.msie && $.browser.version < 7)) menuClasses.push(c.shadowClass);
-      $(this).addClass(menuClasses.join(' '));
+      // $(this).addClass(menuClasses.join(' '));
     });
   };
 
@@ -159,7 +159,7 @@
   sf.IE7fix = function(){
     var o = sf.op;
     // if ($.browser.msie && $.browser.version > 6 && o.dropShadows && o.animation.opacity!=undefined)
-      this.toggleClass(sf.c.shadowClass+'-off');
+    // $(this).toggleClass(sf.c.shadowClass+'-off');
     };
   sf.c = {
     bcClass     : 'sf-breadcrumb',

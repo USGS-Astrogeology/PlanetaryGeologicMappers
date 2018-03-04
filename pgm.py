@@ -8,8 +8,8 @@ from jinja2 import Markup
 
 from forms import PageForm
 
-client = MongoClient(
-  os.environ['DB_PORT_27017_TCP_ADDR'], 27017)
+client = MongoClient('localhost', 27017)
+
 db = client.pgmdb
 
 WSApp = Flask(__name__, instance_relative_config=True)
