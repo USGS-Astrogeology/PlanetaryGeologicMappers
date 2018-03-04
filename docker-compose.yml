@@ -2,10 +2,12 @@ web:
   build: .
   command: python -u pgm.py
   ports:
-    - "8080:8080"
-  volumes:
-    - .:/test
+    - "5000:5000"
   links:
     - db
 db:
   image: mongo:3.6.2
+  ports:
+    - "27017:27017"
+  volumes:
+    - ./pgmdb:/data/db
