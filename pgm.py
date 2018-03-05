@@ -3,6 +3,7 @@ from datetime import datetime
 
 from flask import Flask, abort, flash, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
+import urllib
 
 client = MongoClient('localhost', 27017)
 
@@ -34,6 +35,24 @@ def mapHandler(body):
 @WSApp.route("/Project")
 def mapAllHandler():
     return render_template('map_template.html', body = 'All', header_dict = header_dict)
+
+@WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>/<ident>")
+def jsonDatasetId(environment, dataset, target, protocol, ident):
+    url = ''
+    if environment == 'dev':
+        url = 'http://astrocloud-dev.wr.usgs.gov/dataset/data/'
+    else:
+        url = 'https://astrocloud.wr.usgs.gov/dataset/data/'
+    url += dataset.lower() + '/' + target.lower() + '/' + protocol.upper()
+    url += '?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json'
+    if ident is not None:
+        url += '&id=' + ident
+    response = urllib.urlopen(url)
+    return Response(response.read(),status=200,mimetype='application/json')
+
+@WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>")
+def jsonDatasetTarget(environment, dataset, target, protocol):
+    return jsonDatasetId (environment, dataset, target, protocol, None)
 
 if __name__ == "__main__":
   # @TODO probably need to remove host arg for production code, but it's
