@@ -201,19 +201,18 @@
 
 
 <script>
-    // url = "http://astrocloud-dev.wr.usgs.gov/dataset/data/pgm/all/WFS?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json&id={{id}}"
-    // @TODO when we get the xss working, we'll need to swap in this URL and get rid of the references to id since it'll only return a single project
+  var test;
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('static',filename='json/All.json')|safe}}", 
-    success : function(result){
-	var json = JSON.parse(result);
-        var url2pub = json.features[{{id}}].properties['Online Publication'];
+    url : "{{url_for('jsonDatasetId', environment='dev',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
+    success : function(json){
+        test = json;
+        var url2pub = json.features[0].properties['Online Publication'];
 
-        $(projectTitle).append(json.features[{{id}}].name)
-        $(mapTitle).append(json.features[{{id}}].name)
-        $(mapSeriesNumber).append(json.features[{{id}}].properties['USGS Number'])
+        $(projectTitle).append(json.features[0].name)
+        $(mapTitle).append(json.features[0].name)
+        $(mapSeriesNumber).append(json.features[0].properties['USGS Number'])
 
 	if (url2pub == "None"){
           $(urlToPublication).append(url2pub);
@@ -221,18 +220,18 @@
           $(urlToPublication).append($('<a href="'+ url2pub +'">'+ url2pub+'</a>'));
 	}
 
-        $(scale).append(json.features[{{id}}].properties.Scale);
+        $(scale).append(json.features[0].properties.Scale);
 
-        var status = json.features[{{id}}].properties.Status;
-        var target = json.features[{{id}}].properties.Target;
-        var poly = json.features[{{id}}].geometry.coordinates;
+        var status = json.features[0].properties.Status;
+        var target = json.features[0].properties.Target;
+        var poly = json.features[0].geometry.coordinates;
 
-        var projection = json.features[{{id}}].properties.Projection;
+        var projection = json.features[0].properties.Projection;
         $(mapProjection).append(projection)
 
-	var authorName = json.features[{{id}}].properties['Author Last Name'] +
+	var authorName = json.features[0].properties['Author Last Name'] +
                       ", " +
-                      json.features[{{id}}].properties['Author First Name'];
+                      json.features[0].properties['Author First Name'];
         $(author).append(authorName)
 
 

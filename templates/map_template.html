@@ -27,13 +27,11 @@
 </html>
 
 <script>
-    //url = "http://astrocloud-dev.wr.usgs.gov/dataset/data/pgm/{{body}}/WFS?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json"
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('static',filename='json/'+body+'.json')|safe}}", 
-    success : function(result){
-        var json = JSON.parse(result);
+    url : "{{url_for('jsonDatasetTarget', environment='dev',dataset='pgm', target=body, protocol='WFS')}}",
+    success : function(json){
         $('#data').append('<tbody>')
 	for (var i = 0; i < json.features.length; i++){
 	      var f_id = json.features[i].id;

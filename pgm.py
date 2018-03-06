@@ -1,9 +1,14 @@
 import os
+import sys
 from datetime import datetime
 
 from flask import Flask, abort, flash, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
-import urllib
+
+if sys.version_info[0] == 3:
+  from urllib.request import urlopen
+else:
+  from urllib import urlopen
 
 client = MongoClient('localhost', 27017)
 
@@ -51,7 +56,8 @@ def jsonDatasetId(environment, dataset, target, protocol, ident):
     url += '?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json'
     if ident is not None:
         url += '&id=' + ident
-    response = urllib.urlopen(url)
+        print(url)
+    response = urlopen(url)
     return Response(response.read(),status=200,mimetype='application/json')
 
 @WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>")
