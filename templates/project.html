@@ -28,19 +28,6 @@
     <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/ol/OpenLayers-2.10/OpenLayers.js"></script>
     <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/js/AstroWebMaps.js"></script>
 
-    <script type="text/javascript">
-      // AJAX for comments
-      function handler_for_ajax_comments (xml_data) {
-        var element = $(xml_data);
-        $('#ajax_comments').html($(xml_data));
-      }
-      function load_comments () {
-
-
-        $.get("/Comment/pubs/256", handler_for_ajax_comments);
-
-      }
-    </script>
 
       <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
     </head>
@@ -201,13 +188,11 @@
 
 
 <script>
-  var test;
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
     url : "{{url_for('jsonDatasetId', environment='dev',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
     success : function(json){
-        test = json;
         var url2pub = json.features[0].properties['Online Publication'];
 
         $(projectTitle).append(json.features[0].name)
@@ -233,8 +218,6 @@
                       ", " +
                       json.features[0].properties['Author First Name'];
         $(author).append(authorName)
-
-
 
         initmap(target, projection, poly, status);
     }
