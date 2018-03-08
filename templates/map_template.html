@@ -85,7 +85,7 @@
             target: upperTarget,
             projection: 'cylindrical',
             showNomenclature: false,
-            datelineWrap: false,
+            datelineWrap: true,
             polygonLayerName: 'Mapping Extents',
             imagePath: 'https://astrowebmaps.wr.usgs.gov/webmapatlas/images/',
             defaultZoomLevel: 2,
@@ -155,7 +155,7 @@
 
 	    console.log(geom);
 
-	    astroMap.vectorDrawer.drawAndStore(geom, project, color, 'footprint', false, false);
+	    astroMap.vectorDrawer.drawAndStore(geom, project, color, 'footprint', false, true);
         }
 
       </script>
