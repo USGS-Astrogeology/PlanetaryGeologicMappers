@@ -3,25 +3,16 @@
 {% block content %}
 {% include 'head.html' %}
 {% include 'header.html' %}
-<div id="main">
-  <div id="wrapper">
-    <div id="content">
-      <div id="homeContent">
-        <h1>NEW PAGE FOR MAP WITH TARGET {{body}}</h1>
-	    <table id="data">
-	      <thead>
-		<th>Project Name</th>
+<h1>NEW PAGE FOR MAP WITH TARGET {{body}}</h1>
+<table id="data">
+  <thead>
+    <th>Project Name</th>
 		<th>Target</th>
 		<th>Scale</th>
 		<th>Author</th>
 		<th>Status</th>
-	      </thead>
-	    </table>
-      </div>
-    </div>
-  </div>
-  <img src="{{url_for('static', filename = 'images/layout/white-box-bottom.png')}}" />
-</div>
+  </thead>
+</table>
 {% include 'footer.html' %}
 {% endblock %}
 </html>
