@@ -11,6 +11,7 @@
   <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static',filename='js/menu.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static',filename='js/froala_editor.pkgd.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.rss.js') }}"></script>
   <!-- <script type="text/javascript" src="/js/jquery.BgImageTranslation.js"></script> -->
 
   <!--[if IE]>
@@ -33,7 +34,7 @@
       }
     });
   });
-  </script>
+</script>
 
   <script>
     $(function() {
@@ -44,17 +45,11 @@
       })
     });
   </script>
+
   <script>
-    $(function() {
-      $('.page').submit(function() {
-          if( window.confirm("Are you sure you want to delete this page?") ) {
-            return true;
-          }
-          else {
-            return false;
-          }
-      });
-  });
+  function confirmDelete(page) {
+    return window.confirm("Are you sure you want to delete " + page + "?");
+  }
   </script>
 
   <script type="text/javascript">
@@ -65,7 +60,6 @@
   </script>
 
   <link href='{{ url_for('static',filename='styles/rss.css') }}' rel='stylesheet' type='text/css' />
-  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.rss.js') }}"></script>
 
   <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
 </head>

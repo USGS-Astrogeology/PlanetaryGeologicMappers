@@ -26,12 +26,14 @@
       {{ entry }}
     </td>
     <td>
-      <div align="center">
-        <a href="/admin/{{ entry }}">edit</a>
-      </div>
+      <button type="submit" class="editButton"
+              form="page_{{ entry }}" formaction="{{ url_for('editPage') }}"
+              formmethod="get">
+              Edit
+      </button>
     </td>
     <td>
-      <button type="submit" class="removeButton"
+      <button type="submit" class="removeButton" onclick="return confirmDelete('{{ entry }}')"
               form="page_{{ entry }}" formaction="{{ url_for('removePage') }}"
               formmethod="post">
               Remove
@@ -42,7 +44,9 @@
 </table>
 
 <div>
-  <a href="/admin/new">New Page</a>
+  <button onclick="window.location.href='{{ url_for( 'createPage') }}';">
+    New Page
+  </button>
 </div>
 {% include 'footer.html' %}
 {% endblock %}

@@ -7,11 +7,7 @@ from pymongo import MongoClient
 from jinja2 import Markup
 
 from forms import PageForm
-
-client = MongoClient('localhost', 27017)
-print(client.database_names())
-print(client.HOST)
-print(client.PORT)
+client = MongoClient('db', 27017)
 db = client.pgmdb
 
 WSApp = Flask(__name__, instance_relative_config=True)
@@ -48,9 +44,10 @@ def map_all_handler():
     menu = Markup(db.static.find_one({'name': 'menu'})['content'])
     return render_template('map_template.html', body = 'All', menu = menu)
 
-@WSApp.route('/admin/<name>', methods = ['GET', 'POST'])
-def editPage(name):
+@WSApp.route('/edit', methods = ['GET', 'POST'])
+def editPage():
     form = PageForm(request.form)
+    name = request.args['page']
     doc = db.static.find_one({'name': name})
     menu = Markup(db.static.find_one({'name': 'menu'})['content'])
 
@@ -80,6 +77,7 @@ def removePage():
 def createPage():
     form = PageForm(request.form)
     menu = Markup(db.static.find_one({'name': 'menu'})['content'])
+
     if request.method == 'POST' and form.validate():
         title = form.page_title.data
         content = form.page_content.data
