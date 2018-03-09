@@ -1,13 +1,19 @@
 import os
-from functools import wraps
-from urllib.parse import quote, unquote
+import sys
+from datetime import datetime
 
 from flask import Flask, abort, flash, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
 from jinja2 import Markup
 
 from forms import PageForm
-client = MongoClient('db', 27017)
+
+if sys.version_info[0] == 3:
+  from urllib.request import urlopen
+else:
+  from urllib import urlopen
+
+client = MongoClient('localhost', 27017)
 db = client.pgmdb
 
 WSApp = Flask(__name__, instance_relative_config=True)
@@ -95,6 +101,29 @@ def editPages():
     menu = Markup(db.static.find_one({'name': 'menu'})['content'])
     entries = [entry['name'] for entry in db.static.find({})]
     return render_template('pages.html', menu = menu, entries = entries)
+
+@WSApp.route("/Project/view/<id>")
+def projectHandler(id):
+    return render_template('project.html', id = id, header_dict = header_dict)
+
+@WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>/<ident>")
+def jsonDatasetId(environment, dataset, target, protocol, ident):
+    url = ''
+    if environment == 'dev':
+        url = 'http://astrocloud-dev.wr.usgs.gov/dataset/data/'
+    else:
+        url = 'https://astrocloud.wr.usgs.gov/dataset/data/'
+    url += dataset.lower() + '/' + target.lower() + '/' + protocol.upper()
+    url += '?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json'
+    if ident is not None:
+        url += '&id=' + ident
+        print(url)
+    response = urlopen(url)
+    return Response(response.read(),status=200,mimetype='application/json')
+
+@WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>")
+def jsonDatasetTarget(environment, dataset, target, protocol):
+    return jsonDatasetId (environment, dataset, target, protocol, None)
 
 if __name__ == "__main__":
     # @TODO probably need to remove host arg for production code, but it's

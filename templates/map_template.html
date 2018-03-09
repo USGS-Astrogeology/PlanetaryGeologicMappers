@@ -3,43 +3,218 @@
 {% block content %}
 {% include 'head.html' %}
 {% include 'header.html' %}
-<h1>NEW PAGE FOR MAP WITH TARGET {{body}}</h1>
-<table id="data">
-  <thead>
-    <th>Project Name</th>
-		<th>Target</th>
-		<th>Scale</th>
-		<th>Author</th>
-		<th>Status</th>
-  </thead>
-</table>
+<div id="main">
+  <div id="wrapper" style="float:left">
+    <div id="content" style="float:left">
+      <div id="homeContent" style="float:left">
+        <h1>Projects for {{body}}</h1>
+        {% if body != "All" %}
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/Layers/maps.js"></script>
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/console.css" type="text/css" />
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/ol.css" type="text/css" />
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/ol/OpenLayers-2.10/OpenLayers.js"></script>
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/js/AstroWebMaps.js"></script>
+
+        <div class="astroConsole" style="width:800px">
+      <div id="astroConsoleTargetInfo"></div>
+      <div id="astroConsoleProjectionButtons"></div>
+      <div id="astroConsoleLonLatSelects"></div>
+      <div id="astroConsoleKey"></div>
+      <img class="astroConsoleBackground" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/images/console.png" />
+    </div>
+
+    <div style="clear:both;margin-bottom:5px"></div>
+
+    <div id="mapContainer" style="width:800px;height:600px">
+      <div id="map" class="astroMap" style="width:800px;height:520px"></div>
+    </div>
+
+   <script type="text/javascript">
+        // Set up AstroWebMaps
+        var astroMap;
+        var lastProject;
+
+        function selectEvent (project) {
+          popup = new OpenLayers.Popup.FramedCloud("chicken",
+                                                   project.geometry.getBounds().getCenterLonLat(),
+                                                   null,
+                                                   '<b><a href=\"/Project/view/'
+                                                   + project.attributes['projectid'] + '\" target="_new">' +
+                                                   project.attributes['name'] + '</a></b><br/><br/>Quad/Map: ' +
+                                                   project.attributes['map'] + '<br/>Status: ' +
+                                                   project.attributes['milestone'] + '<br/>First Author: ' +
+                                                   project.attributes['users'],
+                                                   null,
+                                                   true,
+                                                   popClose);
+
+          project.popup = popup;
+          astroMap.map.addPopup(popup);
+          lastProject = project;
+        };
+
+        function popClose(event) {
+           var project = lastProject;
+           if (project.popup) {
+              astroMap.map.removePopup(project.popup);
+              project.popup.destroy();
+              project.popup = null;
+              astroMap.controls.controls['select'].unselectAll();
+           }
+        };
+
+        function unselectEvent (project) {
+          astroMap.map.removePopup(project.popup);
+          project.popup.destroy();
+          project.popup = null;
+        };
+
+        function initmap() {
+          var target = '{{body}}';
+          var upperTarget = target.toUpperCase();
+
+          var consoleSettings = {
+            target: upperTarget,
+            projButtons: true,
+            lonLatSelects: true,
+            mouseLonLat: true
+          };
+
+          var mapSettings = {
+            mapDiv: 'map',
+            target: upperTarget,
+            projection: 'cylindrical',
+            showNomenclature: false,
+            datelineWrap: true,
+            polygonLayerName: 'Mapping Extents',
+            imagePath: 'https://astrowebmaps.wr.usgs.gov/webmapatlas/images/',
+            defaultZoomLevel: 2,
+            defaultCenterLat: 0,
+            defaultCenterLon: 180
+          };
+
+          var controlSettings = {
+            zoomBar: true,
+            layerSwitcher: true,
+            graticule: true,
+            featureSearch: false,
+            scaleLine: true,
+            overviewMap: true,
+            mousePosition: true,
+            zoomButton: true,
+            boundBoxDrawer: false,
+            homeButton: true,
+            selectButton: true,
+            resizeGeometryButton: false,
+            reshapeGeometryButton: false,
+            editCenterPointButton: false,
+            transformGeometryButton: false,
+            editGeometryButton: 'none',
+            selectHandler: selectEvent,
+            unselectHandler: popClose
+          };
+
+          astroMap = new AstroMap (mapSettings, controlSettings, consoleSettings, null);
+	  astroMap.console.addKey('Active', consoleColors[1]);
+          astroMap.console.addKey('Complete', consoleColors[2]);
+
+	}
+	// Table of color codes - if new categories are defined, need to add more keys here
+	var consoleColors = new Array();
+	consoleColors[1] = 'teal';
+	consoleColors[2] = 'purple';
+	consoleColors[3] = 'green';
+	consoleColors[4] = 'olive';
+	consoleColors[5] = 'lime';
+	consoleColors[6] = 'olive';
+	consoleColors[7] = 'aqua';
+
+	function plotProjectCoords(pid, name, status, map_geometry, author){
+              var project = new Array();
+              project['projectid'] = pid;
+              project['name'] = name;
+              project['map'] = "";
+              project['milestone'] = status;
+              // Add users
+              project['users'] = '';
+    	      project['users'] += (author + '<br/>');
+
+	    var geom = 'MULTIPOLYGON((('
+
+
+	    for(i = 0 ; i < map_geometry[0].length-1; i++){
+		geom += map_geometry[0][i].join(' ') + ',';
+	    }
+
+	    geom += map_geometry[0][map_geometry[0].length-1] + ')))'
+
+	    var color = 'teal';
+	    if (status == 'Printed and Posted'){
+		color = 'purple';
+	    }
+
+	    console.log(geom);
+
+	    astroMap.vectorDrawer.drawAndStore(geom, project, color, 'footprint', false, true);
+        }
+
+      </script>
+
+        {% endif %}
+
+            <table id="data">
+              <thead>
+                <th>Project Name</th>
+                <th>Target</th>
+                <th>Scale</th>
+                <th>Author</th>
+                <th>Status</th>
+              </thead>
+            </table>
+      </div>
+    </div>
+  </div>
+  <img src="{{url_for('static', filename = 'images/layout/white-box-bottom.png')}}" />
+</div>
 {% include 'footer.html' %}
 {% endblock %}
 </html>
 
 <script>
-  var json;
-    //url = "http://astrocloud-dev.wr.usgs.gov/dataset/data/pgm/{{body}}/WFS?request=getFeature&service=WFS&version=1.1.0&outputformat=application/json"
+  var test;
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('static',filename='json/'+body+'.json')|safe}}",
-    success : function(result){
-        json = JSON.parse(result);
+    url : "{{url_for('jsonDatasetTarget', environment='dev',dataset='pgm', target=body, protocol='WFS')}}",
+    success : function(json){
+        test = json;
         $('#data').append('<tbody>')
-	for (var i = 0; i < json.features.length; i++){
-	      var row = "<tr>"
-                   + "<td>" + json.features[i].name+ "</td>"
-                   + "<td>" +" " + "</td>"
-                   + "<td>" +" " + "</td>"
-			    + "<td>" + json.features[i].properties['Author Last Name']+ ", "
-			    + json.features[i].properties['Author First Name']+ "</td>"
+        for (var i = 0; i < json.features.length; i++){
+              var f_id = json.features[i].id;
+              var row = "<tr>"
+                   + "<td> <a href = /Project/view/" + f_id + ">" + json.features[i].name+ "</a></td>"
+                   + "<td>" + json.features[i].properties.Target + "</td>"
+                   + "<td>" + json.features[i].properties.Scale + "</td>"
+                            + "<td>" + json.features[i].properties['Author Last Name']+ ", "
+                            + json.features[i].properties['Author First Name']+ "</td>"
                    + "<td>" + json.features[i].properties.Status + "</td>"
                    + "</tr>";
             $('#data').append(row);
-	}
-	$('#data').DataTable();
+        }
+        $('#data').DataTable();
         $('#data').append('</tbody>')
+	if ('{{body}}' != 'All'){
+	    initmap();
+	    for (var i = 0; i < json.features.length; i++){
+		var pid = json.features[i].id;
+		var name = json.features[i].name;
+		var status = json.features[i].properties.Status;
+		var map_geometry = json.features[i].geometry.coordinates;
+		var author = json.features[i].properties['Author Last Name'] + ', ';
+		author += json.features[i].properties['Author First Name'];
+	        plotProjectCoords(pid, name, status, map_geometry, author);
+	    }
+	}
     }
     });
     });
