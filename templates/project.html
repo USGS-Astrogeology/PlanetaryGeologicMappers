@@ -1,0 +1,240 @@
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+  <html>
+    {% block content %}
+    {% include 'head.html' %}
+    {% include 'header.html' %}
+    <head>
+      <script>
+        $(document).ready(function(){
+          $("#main_menu").superfish({
+            delay:       800,
+            autoArrows: false,
+            dropShadows: false,
+            speed: 'fast'
+          });
+          // if there is only one child then there are no sub menus, then dont display the arrow background image.
+          $('li li.has_children').each(function(index){
+            if( $(this).children()[1] == null) {
+              $(this).css({'background':'transparent'});
+            }
+          });
+        });
+      </script>
+
+
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/Layers/maps.js"></script>
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/console.css" type="text/css" />
+    <link rel="stylesheet" href="https://astrowebmaps.wr.usgs.gov/webmapatlas/styles/ol.css" type="text/css" />
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/ol/OpenLayers-2.10/OpenLayers.js"></script>
+    <script type="text/javascript" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/js/AstroWebMaps.js"></script>
+
+
+      <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
+    </head>
+    <div id="main">
+      <div id="wrapper" style="float: left">
+	<div id="content" style="float: left">
+	  <div id="homeContent">
+
+	    
+    <h2 id="projectTitle"></h2>
+    <div id="errors">
+
+
+    </div>
+
+  <div> <!-- Gratuitous div to fix layout problem -->
+
+
+  <div>
+  <div style='float: left;'>
+    <div class="astroConsole" style='width:500px;float:left;'>
+      <div id="astroConsoleTargetInfo"></div>
+      <div id="astroConsoleProjectionButtons"></div>
+      <div id="astroConsoleLonLatSelects"></div>
+      <div id="astroConsoleKey"></div>
+      <img class="astroConsoleBackground" src="https://astrowebmaps.wr.usgs.gov/webmapatlas/images/console.png"/>
+    </div>
+
+    <div id="mapContainer" style="width:500px;height:480px">
+      <div id="map" class="astroMap" style="width:500px;height:400px"></div>
+    </div>
+
+    <div id="ajax_comments" class="comments"></div>
+
+  </div>
+
+  <div class="details">
+    <h3>Project Details</h3>
+    <table>
+      <tr>
+        <th>Map Title (Complete) or Region (Active)</th>
+        <td id="mapTitle"> </td>
+      </tr>
+      <tr>
+        <th>Quad Number</th>
+        <td id="quadNumber"> </td>
+      </tr>
+      <tr>
+        <th>USGS Map Series Number</th>
+        <td id="mapSeriesNumber"></td>
+      </tr>
+      <tr>
+        <th>URL to Published Map</th>
+        <td id="urlToPublication">&nbsp;</td>
+      </tr>
+      <tr>
+        <th>Start Date</th>
+        <td id="startDate"> </td>
+      </tr>
+      <tr>
+        <th>Scale</th>
+        <td id="scale"> </td>
+      </tr>
+      <tr>
+        <th>Map Projection</th>
+        <td id="mapProjection"> </td>
+      </tr>
+      <tr>
+        <th>Resolution of Base Image</th>
+        <td id="baseImageResolution"> </td>
+      </tr>
+      <tr>
+        <th>Base Map Data Source</th>
+        <td id="baseMapDataSource"> </td>
+      </tr>
+      <tr>
+        <th>Author</th>
+        <td id="author"> </td>
+      </tr>
+
+    </table>
+    </div>
+    </div>
+
+  <script type="text/javascript">
+// AstroWebMaps related
+    function initmap(map_target, map_projection, map_geometry, map_status) {
+      var target = map_target;
+      var upperTarget = target.toUpperCase();
+
+      var consoleSettings = {
+        target: upperTarget,
+        projButtons: true,
+        lonLatSelects: true,
+        mouseLonLat: true
+      };
+
+      var mapSettings = {
+        mapDiv: 'map',
+        target: upperTarget,
+        //@TODO only works with cylindrical projection at the moment.  No idea why.
+        projection: 'cylindrical',
+        showNomenclature: false,
+        datelineWrap: true,
+        polygonLayerName: 'Mapping Extent',
+        imagePath: 'https://astrowebmaps.wr.usgs.gov/webmapatlas/images/',
+        defaultZoomLevel: 5,
+        defaultCenterLat: 0,
+        defaultCenterLon: 0
+      };
+
+      var controlSettings = {
+        zoomBar: true,
+        layerSwitcher: true,
+        graticule: true,
+        featureSearch: false,
+        scaleLine: true,
+        overviewMap: true,
+        mousePosition: true,
+        zoomButton: true,
+        boundingBoxDrawer: false,
+        homeButton: true,
+        selectButton: true,
+	resizeGeometryButton: false,
+        reshapeGeometryButton: false,
+        editCenterPointButton: false,
+        transformGeometryButton: false,
+        editGeometryButton: 'none',
+        defaultControl: "select"
+      };
+
+      var astroMap = new AstroMap(mapSettings, controlSettings, consoleSettings, null);
+
+      <!-- Draw Polygon -->
+      
+      
+	var geom = 'MULTIPOLYGON((('
+
+      
+    for(i = 0 ; i < map_geometry[0].length-1; i++){
+          geom += map_geometry[0][i].join(' ') + ',';
+    }
+    
+    geom += map_geometry[0][map_geometry[0].length-1] + ')))'
+     
+    var color = 'teal';
+    if (map_status == 'Printed and Posted'){
+	color = 'purple';
+    }
+
+    astroMap.vectorDrawer.drawAndStore(geom, null, color, 'footprint', true, false);
+    astroMap.console.addKey('Active','teal');
+    astroMap.console.addKey('Complete','purple');
+        
+      
+    }
+  </script>
+
+
+<script>
+  $(document).ready(function(){
+    $.ajax({
+    type : 'GET',
+    url : "{{url_for('jsonDatasetId', environment='dev',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
+    success : function(json){
+        var url2pub = json.features[0].properties['Online Publication'];
+
+        $(projectTitle).append(json.features[0].name)
+        $(mapTitle).append(json.features[0].name)
+        $(mapSeriesNumber).append(json.features[0].properties['USGS Number'])
+
+	if (url2pub == "None"){
+          $(urlToPublication).append(url2pub);
+	}else{
+          $(urlToPublication).append($('<a href="'+ url2pub +'">'+ url2pub+'</a>'));
+	}
+
+        $(scale).append(json.features[0].properties.Scale);
+
+        var status = json.features[0].properties.Status;
+        var target = json.features[0].properties.Target;
+        var poly = json.features[0].geometry.coordinates;
+
+        var projection = json.features[0].properties.Projection;
+        $(mapProjection).append(projection)
+
+	var authorName = json.features[0].properties['Author Last Name'] +
+                      ", " +
+                      json.features[0].properties['Author First Name'];
+        $(author).append(authorName)
+
+        initmap(target, projection, poly, status);
+    }
+    });
+    });
+
+</script>
+
+
+
+
+
+    
+     	  </div>
+	</div>
+      </div>
+    </div>
+  {% include 'footer.html' %}
+  {% endblock %}
+  </html>

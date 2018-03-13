@@ -79,21 +79,21 @@ ul#main_menu li li li.sfHover ul {
 }
 
 #main_menu ul {
-  background: #000 url(/images/layout/sub_menu_background_horz.jpg) repeat-y;
+  background: #000 url('/images/layout/sub_menu_background_horz.jpg') repeat-y;
 }
 
 
 /*CUSTOMIZATIONS*/
 
-#main_menu ul li.has_children, #main_menu ul .has_children:hover { 
+#main_menu ul li.has_children, #main_menu ul .has_children:hover {
   background: transparent  url('/images/layout/nav_arrow_right.png') no-repeat center right;
 }
-#main_menu > li li.has_children:hover { 
+#main_menu > li li.has_children:hover {
   background: transparent  url('/images/layout/nav_arrow_right_lighter.png') no-repeat center right;
 }
 /*#main_menu > li.has_children > a {
  background: transparent url('/images/layout/nav_arrow_down_lighter.png') no-repeat center right;
- padding-right: 15px; 
+ padding-right: 15px;
 }
 /*#main_menu > li.has_children:hover > a {
  background: transparent url('/images/layout/nav_arrow_down.png') no-repeat center right;
