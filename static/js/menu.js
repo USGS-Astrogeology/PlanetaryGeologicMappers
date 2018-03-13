@@ -80,7 +80,7 @@
     // bind the function to the two event listeners
     return this.mouseover(handleHover).mouseout(handleHover);
   };
-  
+
 })(jQuery);
 
 
@@ -115,15 +115,15 @@
           o.retainPath=($.inArray($$[0],o.$path)>-1);
           $$.hideSuperfishUl();
           if (o.$path.length && $$.parents(['li.',o.hoverClass].join('')).length<1){over.call(o.$path);}
-        },o.delay);  
+        },o.delay);
       },
-      getMenu = function($menu){
+      getMenu = function($menu) {
         var menu = $menu.parents(['ul.',c.menuClass,':first'].join(''))[0];
         sf.op = sf.o[menu.serial];
         return menu;
       },
       addArrow = function($a){ $a.addClass(c.anchorClass).append($arrow.clone()); };
-      
+
     return this.each(function() {
       var s = this.serial = sf.o.length;
       var o = $.extend({},sf.defaults,op);
@@ -132,22 +132,23 @@
           .filter('li:has(ul)').removeClass(o.pathClass);
       });
       sf.o[s] = sf.op = o;
-      
+
       $('li:has(ul)',this)[($.fn.hoverIntent && !o.disableHI) ? 'hoverIntent' : 'hover'](over,out).each(function() {
         if (o.autoArrows) addArrow( $('>a:first-child',this) );
       })
       .not('.'+c.bcClass)
         .hideSuperfishUl();
-      
+
       var $a = $('a',this);
       $a.each(function(i){
         var $li = $a.eq(i).parents('li');
         $a.eq(i).focus(function(){over.call($li);}).blur(function(){out.call($li);});
       });
       o.onInit.call(this);
-      
+
     }).each(function() {
       var menuClasses = [c.menuClass];
+      // if (sf.op.dropShadows  && !($.browser.msie && $.browser.version < 7)) menuClasses.push(c.shadowClass);
       $(this).addClass(menuClasses.join(' '));
     });
   };
@@ -155,6 +156,11 @@
   var sf = $.fn.superfish;
   sf.o = [];
   sf.op = {};
+  sf.IE7fix = function(){
+    var o = sf.op;
+    // if ($.browser.msie && $.browser.version > 6 && o.dropShadows && o.animation.opacity!=undefined)
+    // $(this).toggleClass(sf.c.shadowClass+'-off');
+    };
   sf.c = {
     bcClass     : 'sf-breadcrumb',
     menuClass   : 'sf-js-enabled',
@@ -192,8 +198,9 @@
         sh = sf.c.shadowClass+'-off',
         $ul = this.addClass(o.hoverClass)
           .find('>ul:hidden').css('visibility','visible');
+      sf.IE7fix.call($ul);
       o.onBeforeShow.call($ul);
-      $ul.animate(o.animation,o.speed,function(){ o.onShow.call($ul); });
+      $ul.animate(o.animation,o.speed,function(){ sf.IE7fix.call($ul); o.onShow.call($ul); });
       return this;
     }
   });

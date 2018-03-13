@@ -38,7 +38,7 @@
           popup = new OpenLayers.Popup.FramedCloud("chicken",
                                                    project.geometry.getBounds().getCenterLonLat(),
                                                    null,
-                                                   '<b><a href=\"/Project/view/' 
+                                                   '<b><a href=\"/Project/view/'
                                                    + project.attributes['projectid'] + '\" target="_new">' +
                                                    project.attributes['name'] + '</a></b><br/><br/>Quad/Map: ' +
                                                    project.attributes['map'] + '<br/>Status: ' +
@@ -161,7 +161,7 @@
       </script>
 
         {% endif %}
-        
+
             <table id="data">
               <thead>
                 <th>Project Name</th>
@@ -185,7 +185,7 @@
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('jsonDatasetTarget', environment='dev',dataset='pgm', target=body, protocol='WFS')}}",
+    url : "{{url_for('json_dataset_target', environment='dev',dataset='pgm', target=body, protocol='WFS')}}",
     success : function(json){
         test = json;
         $('#data').append('<tbody>')

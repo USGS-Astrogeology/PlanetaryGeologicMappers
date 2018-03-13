@@ -20,22 +20,10 @@
       <img src="{{ url_for('static',filename='images/layout/geologicmapping-name.png') }}" />
     </div>
     <div id="main-nav-background">
-      <ul id="main_menu">
-        <li><a href='/'>Home</a></li> <!-- TODO: this mouse over needs to be a tad different because of the corner -->
-        <li>
-          <a href='#'>Maps</a>
-          <ul>
-            {% block content %}
-            {% for map in header_dict.maps %}
-              <li><a href="/Target/project/{{ map }}">{{ map }}</a></li>
-            {% endfor %}
-            <li><a href="/Project">All</a></li>
-          </ul>
-        </li>
-        {% for page in header_dict.pages %}
-          <li><a href="/Page/view/{{ page }}">{{ page }}</a></li>
-        {% endfor %}
-        {% endblock %}
-      </ul>
+      {{ menu }}
     </div>
   </div>
+  <div id="main">
+    <div id="wrapper">
+      <div id="content">
+        <div id="homeContent">
