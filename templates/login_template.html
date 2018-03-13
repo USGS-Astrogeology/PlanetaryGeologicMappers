@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+{% block content %}
+{% include 'head.html' %}
+{% include 'header.html' %}
+<form method=post>
+  <dl>
+    <dt>{{ form.admin_name.label }}</dt>
+    <dd>
+      {{ form.admin_name }}
+    </dd>
+    <hr />
+    <dt>{{ form.admin_password.label }}</dt>
+    <dd>
+      {{ form.admin_password }}
+    </dd>
+  </dl>
+  <p><input type=submit value=Login>
+</form>
+{% include 'footer.html' %}
+{% endblock %}
+</html>

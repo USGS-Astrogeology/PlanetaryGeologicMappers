@@ -27,14 +27,14 @@
     </td>
     <td>
       <button type="submit" class="editButton"
-              form="page_{{ entry }}" formaction="{{ url_for('editPage') }}"
+              form="page_{{ entry }}" formaction="{{ url_for('edit_page') }}"
               formmethod="get">
               Edit
       </button>
     </td>
     <td>
       <button type="submit" class="removeButton" onclick="return confirmDelete('{{ entry }}')"
-              form="page_{{ entry }}" formaction="{{ url_for('removePage') }}"
+              form="page_{{ entry }}" formaction="{{ url_for('remove_page') }}"
               formmethod="post">
               Remove
       </button>
@@ -44,7 +44,7 @@
 </table>
 
 <div>
-  <button onclick="window.location.href='{{ url_for( 'createPage') }}';">
+  <button onclick="window.location.href='{{ url_for( 'create_page') }}';">
     New Page
   </button>
 </div>
