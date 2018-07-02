@@ -7,17 +7,28 @@ with resources for mappers and current status of mapping projects including GIS 
 
 This project is the conversion of the website to use Python/Flask as the web application container.
 
-## Creating the runtime environment
+By default, the commands in the following section must be run as root, so they use 'sudo.'  Commands on Windows are the same except that the user may omit 'sudo.'
 
-To run the web services, first create a Python 2.7 conda environment::
+## 1. Install Docker
 
-    > conda create -p /path/to/build/env python=2.7
+To install Docker, simply follow the [installation instructions](https://docs.docker.com/install/)for your system.
 
-Then activate the environment and install the required modules::
+## 2. Install Docker-Compose
 
-    > source active /path/to/build/env
-    > conda install -c conda-forge -y flask flask-sqlalchemy geoalchemy2 gdal shapely geojson psycopg2
+Though some distributions of Docker (mostly on Windows and OSX) are shipped with docker-compose, it may be necessary for some users to perform a separate installation.  To determine if you need to perform this installation, open a terminal and type:
 
-Then, run the web application::
+    > sudo docker-compose
+    
+If the command outputs usage instructions, then you may skip this step.  If, instead, the output reads "command not found," then follow the installation instructions [here](https://docs.docker.com/compose/install/).
 
-    > source active /path/to/build/env
+## 3. Building the Docker container
+
+To build the Docker container, navigate (within a terminal) to the top level of the PGM directory and use the following command:
+
+    > sudo docker-compose build
+    
+## 4. Starting the service
+
+To start the service, use the following command:
+
+    > sudo docker-compose up

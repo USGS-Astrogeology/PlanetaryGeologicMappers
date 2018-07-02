@@ -1,0 +1,65 @@
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=IE8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>{{ title }}</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/base.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/content.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/menu.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/froala_style.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/froala_editor.pkgd.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/menu.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/froala_editor.pkgd.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.rss.js') }}"></script>
+  <!-- <script type="text/javascript" src="/js/jquery.BgImageTranslation.js"></script> -->
+
+  <!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="/styles/ie.css"/>
+  <![endif]-->
+
+<link href='{{ url_for('static',filename='styles/rss.css') }}' rel='stylesheet' type='text/css' />
+<script>
+  $(document).ready(function(){
+    $("#main_menu").superfish({
+      delay:       800,
+      autoArrows: false,
+      dropShadows: false,
+      speed: 'fast'
+    });
+    // if there is only one child then there are no sub menus, then dont display the arrow background image.
+    $('li li.has_children').each(function(index){
+      if( $(this).children()[1] == null) {
+        $(this).css({'background':'transparent'});
+      }
+    });
+  });
+</script>
+
+  <script>
+    $(function() {
+      $('#froala-editor').froalaEditor({
+        toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
+        pluginsEnabled: null,
+        width: '855'
+      })
+    });
+  </script>
+
+  <script>
+  function confirmDelete(page) {
+    return window.confirm("Are you sure you want to delete " + page + "?");
+  }
+  </script>
+
+  <script type="text/javascript">
+  $(document).ready(function () {
+    $('#rssFeed').rss('https://astrogeology.usgs.gov/rss?cat=pgm', { limit: 5, ssl: true,
+      entryTemplate: '<li><a href="{url}">{title}</a><br/>{shortBodyPlain}</li>' });
+  });
+  </script>
+
+  <link href='{{ url_for('static',filename='styles/rss.css') }}' rel='stylesheet' type='text/css' />
+
+  <!-- <script type="application/javascript" src="https://www.usgs.gov/scripts/analytics/usgs-analytics.js"></script> -->
+</head>
