@@ -6,7 +6,7 @@ services:
     build: .
     command: python -u pgm.py
     ports:
-      - "5000:5000"
+      - "5150:5000"
     links:
       - db
   db:
