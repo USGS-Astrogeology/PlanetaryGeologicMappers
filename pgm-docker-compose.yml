@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
+    image: usgsastro/planetarygeologicmappers
     environment:
       - PYTHONUNBUFFERED=1
     build: .
