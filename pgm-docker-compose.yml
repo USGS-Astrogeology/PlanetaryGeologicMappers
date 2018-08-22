@@ -7,12 +7,8 @@ services:
     build: .
     command: python -u pgm.py
     ports:
-      - "5150:5000"
-    links:
-      - db
+      - "8085:5000"
   db:
     image: mongo:3.6.2
-    ports:
-      - '27017:27017'
     volumes:
       - ./pgmdb:/data/db/

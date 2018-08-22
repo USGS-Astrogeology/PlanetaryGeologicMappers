@@ -14,7 +14,7 @@ if sys.version_info[0] == 3:
 else:
   from urllib import urlopen
 
-client = MongoClient('db', 27017)
+client = MongoClient('db')
 db = client.pgmdb
 
 admin = {'admin_name': '', 'admin_password': ''}
