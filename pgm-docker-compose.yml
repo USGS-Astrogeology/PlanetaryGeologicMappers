@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    image: usgsastro/planetarygeologicmappers
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python -u pgm.py
+    ports:
+      - "8085:5000"
+  db:
+    image: evindunn/mongo
+    environment:
+      MONGODB_UID: 1555
+      MONGODB_GID: 1555
+    volumes:
+      - /var/lib/dockervols/pgmdb:/data/db

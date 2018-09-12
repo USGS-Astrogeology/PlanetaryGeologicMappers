@@ -14,21 +14,21 @@ if sys.version_info[0] == 3:
 else:
   from urllib import urlopen
 
-client = MongoClient('db', 27017)
+client = MongoClient('db')
 db = client.pgmdb
 
 admin = {'admin_name': '', 'admin_password': ''}
 
 WSApp = Flask(__name__, instance_relative_config=False)
 WSApp.debug=True
-WSApp.config.from_pyfile('config.py')
-print(WSApp.config)
+# WSApp.config.from_pyfile('config.py')
+# print(WSApp.config)
 
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if admin['admin_name'] != WSApp.config['ADMIN_NAME'] and \
-           admin['admin_password']!= WSApp.config['ADMIN_PASSWORD']:
+        if admin['admin_name'] != os.environ['ADMIN_NAME'] and \
+           admin['admin_password']!= os.environ['ADMIN_PASSWORD']:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
