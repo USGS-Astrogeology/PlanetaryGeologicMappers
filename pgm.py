@@ -135,7 +135,8 @@ def edit_pages():
 
 @WSApp.route("/Project/view/<id>")
 def project_handler(id):
-    return render_template('project.html', id = id, header_dict = header_dict)
+    menu = Markup(db.static.find_one({'name': 'menu'})['content'])
+    return render_template('project.html', id = id, menu = menu)
 
 @WSApp.route("/datasets/<environment>/<dataset>/<target>/<protocol>/<ident>")
 def json_dataset_id(environment, dataset, target, protocol, ident):
