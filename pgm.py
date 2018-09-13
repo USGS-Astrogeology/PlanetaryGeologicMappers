@@ -1,5 +1,7 @@
 import os
 import sys
+import json
+from glob import glob
 from functools import wraps
 from datetime import datetime
 
@@ -17,7 +19,13 @@ else:
 client = MongoClient('db')
 db = client.pgmdb
 
-admin = {'admin_name': '', 'admin_password': ''}
+# Populate the environment with potential secrets
+for file in glob('/run/secrets/*'):
+  with open(file) as fp:
+    secrets = json.load(fp)
+
+    for key, value in secrets.items():
+      os.environ[key] = value
 
 WSApp = Flask(__name__, instance_relative_config=False)
 WSApp.debug=True
