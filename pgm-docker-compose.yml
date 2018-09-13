@@ -16,3 +16,7 @@ services:
       MONGODB_GID: 1555
     volumes:
       - /var/lib/dockervols/pgmdb:/data/db
+
+secrets:
+  pgm_web_secrets:
+    external: true
