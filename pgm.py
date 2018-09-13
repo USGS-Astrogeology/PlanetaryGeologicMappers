@@ -18,7 +18,7 @@ else:
 
 client = MongoClient('db')
 db = client.pgmdb
-admin = False
+admin = {}
 
 # Populate the environment with potential secrets
 for file in glob('/run/secrets/*'):
@@ -36,7 +36,8 @@ WSApp.debug=True
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not admin :
+        if admin['admin_name'] != os.environ['ADMIN_NAME'] and \
+           admin['admin_password']!= os.environ['ADMIN_PASSWORD']:
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -47,12 +48,8 @@ def login():
     form = LoginForm(request.form)
 
     if request.method == 'POST':
-
-        name = form.admin_name.data
-        password = form.admin_password.data
-
-        if name == os.environ['ADMIN_NAME'] and password == os.environ['ADMIN_PASSWORD']:
-            admin = True
+        admin['admin_name'] = form.admin_name.data
+        admin['admin_password'] = form.admin_password.data
 
         return redirect(url_for('edit_pages'))
 
