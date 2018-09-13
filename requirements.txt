@@ -6,3 +6,4 @@ shapely
 geojson
 psycopg2
 pymongo
+wtforms
