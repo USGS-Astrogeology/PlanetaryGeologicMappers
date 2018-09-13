@@ -1,4 +1,4 @@
-from wtforms import TextField, StringField, Form
+from wtforms import TextField, StringField, Form, PasswordField
 from wtforms.validators import AnyOf, DataRequired, required
 from wtforms.widgets import TextArea
 
@@ -17,4 +17,4 @@ class PageForm(Form):
 
 class LoginForm(Form):
     admin_name = TextField(u'Admin Name', [required()])
-    admin_password = TextField(u'Admin Password', [required()])
+    admin_password = PasswordField(u'Admin Password', [required()])
