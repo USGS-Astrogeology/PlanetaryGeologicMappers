@@ -36,7 +36,7 @@
 	<div id="content" style="float: left">
 	  <div id="homeContent">
 
-	    
+
     <h2 id="projectTitle"></h2>
     <div id="errors">
 
@@ -162,17 +162,17 @@
       var astroMap = new AstroMap(mapSettings, controlSettings, consoleSettings, null);
 
       <!-- Draw Polygon -->
-      
-      
+
+
 	var geom = 'MULTIPOLYGON((('
 
-      
+
     for(i = 0 ; i < map_geometry[0].length-1; i++){
           geom += map_geometry[0][i].join(' ') + ',';
     }
-    
+
     geom += map_geometry[0][map_geometry[0].length-1] + ')))'
-     
+
     var color = 'teal';
     if (map_status == 'Printed and Posted'){
 	color = 'purple';
@@ -181,8 +181,8 @@
     astroMap.vectorDrawer.drawAndStore(geom, null, color, 'footprint', true, false);
     astroMap.console.addKey('Active','teal');
     astroMap.console.addKey('Complete','purple');
-        
-      
+
+
     }
   </script>
 
@@ -191,7 +191,7 @@
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('jsonDatasetId', environment='dev',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
+    url : "{{url_for('json_dataset_id', environment='dev',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
     success : function(json){
         var url2pub = json.features[0].properties['Online Publication'];
 
@@ -230,7 +230,7 @@
 
 
 
-    
+
      	  </div>
 	</div>
       </div>
