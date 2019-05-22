@@ -1,0 +1,92 @@
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-pgm-db
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 128Mi
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pgm
+  namespace: development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgm
+  # Pod template
+  template:
+    metadata:
+      labels:
+        app: pgm
+    spec:
+      containers:
+        - name: pgmweb
+          image: usgsastro/planetarygeologicmappers:latest
+          ports: [{ containerPort: 5000 }]
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            # The two container share a network stack since they're in the
+            # same pod, so the mongodb host is localhost
+            - name: MONGODB_HOST
+              value: "127.0.0.1"
+          volumeMounts:
+            - name: pgm-secrets
+              mountPath: /run/secrets/pgm_web_secrets
+        - name: pgmdb
+          image: mongo:latest
+          volumeMounts:
+            - name: vol-pgm-db
+              mountPath: /data/db
+      volumes:
+        - name: pgm-secrets
+          secret: { secretName: pgm-web-secrets }
+        - name: vol-pgm-db
+          persistentVolumeClaim: { claimName: pvc-pgm-db }
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: pgm
+  namespace: development
+spec:
+  selector:
+    app: pgm
+  ports:
+  - name: http
+    protocol: TCP
+    port: 5000
+    targetPort: 80
+
+---
+
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: pgm
+  namespace: development
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  labels:
+    app: pgm
+spec:
+  rules:
+    - host: planetarymapping-dev.wr.usgs.gov
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: pgm
+              servicePort: http

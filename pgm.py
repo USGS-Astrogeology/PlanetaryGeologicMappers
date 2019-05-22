@@ -16,7 +16,10 @@ if sys.version_info[0] == 3:
 else:
   from urllib import urlopen
 
-client = MongoClient('db')
+if not "MONGODB_HOST" in os.environ:
+    raise NameError("MONGODB_HOST environment variable is not set")
+
+client = MongoClient(os.environ["MONGODB_HOST"])
 db = client.pgmdb
 admin = {}
 
