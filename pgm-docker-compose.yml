@@ -4,19 +4,19 @@ services:
     image: usgsastro/planetarygeologicmappers
     environment:
       - PYTHONUNBUFFERED=1
+      - MONGODB_HOST=db
     command: python -u pgm.py
     ports:
       - "8085:5000"
     secrets:
       - pgm_web_secrets
   db:
-    image: evindunn/mongo
-    environment:
-      MONGODB_UID: 1555
-      MONGODB_GID: 1555
+    image: mongo:latest
     volumes:
-      - /var/lib/dockervols/pgmdb:/data/db
+      - vol-pgm:/data/db
+
+volumes:
+  vol-pgm: { external: true }
 
 secrets:
-  pgm_web_secrets:
-    external: true
+  pgm_web_secrets: { external: true }
