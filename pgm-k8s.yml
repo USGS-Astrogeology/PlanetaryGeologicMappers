@@ -4,6 +4,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-pgm-db
+  namespace: development
 spec:
   accessModes:
     - ReadWriteMany
@@ -42,7 +43,7 @@ spec:
               value: "127.0.0.1"
           volumeMounts:
             - name: pgm-secrets
-              mountPath: /run/secrets/pgm_web_secrets
+              mountPath: /run/secrets
         - name: pgmdb
           image: mongo:latest
           volumeMounts:
@@ -67,8 +68,8 @@ spec:
   ports:
   - name: http
     protocol: TCP
-    port: 5000
-    targetPort: 80
+    port: 80
+    targetPort: 5000
 
 ---
 
