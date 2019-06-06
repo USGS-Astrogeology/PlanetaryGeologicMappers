@@ -110,7 +110,6 @@ def edit_page():
     form.page_name.data = name
     form.page_content.data = file_markup
 
-    print(form.page_content.data)
 
     return render_template('edit.html', form = form, menu = menu, rss = False)
 
