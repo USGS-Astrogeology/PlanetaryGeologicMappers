@@ -1,27 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 {% block content %}
-{% include 'head.html' %}
-{% include 'header.html' %}
-<form method=post>
-  <dl>
-    <dt>{{ form.page_title.label }}</dt>
-    <dd>
-      {{ form.page_title(rows="2", cols="139") }}
-    </dd>
-    <hr />
-    <dt>{{ form.page_name.label }}</dt>
-    <dd>
-      {{ form.page_name(rows="2", cols="139") }}
-    </dd>
-    <hr />
-    <dt>{{ form.page_content.label }}</dt>
-    <dd>
-      {{ form.page_content(id = "froala-editor") }}
-    </dd>
-  </dl>
-  <p><input type=submit value=Save>
-</form>
-{% include 'footer.html' %}
+  {% include 'head.html' %}
+  {% include 'header.html' %}
+  <form method=post>
+    <dl>
+      <dt>{{ form.page_title.label }}</dt>
+      <dd>
+        {{ form.page_title(rows="2", cols="100") }}
+      </dd>
+      <hr />
+      <dt>{{ form.page_name.label }}</dt>
+      <dd>
+        {{ form.page_name(rows="2", cols="100") }}
+      </dd>
+      <hr />
+      <dt>{{ form.page_content.label }}</dt>
+      <dd>
+        {{ form.page_content(id = "froala-editor") }}
+      </dd>
+    </dl>
+    <p><input type=submit value=Save>
+  </form>
 {% endblock %}
 </html>
+{% include 'footer.html' %}
+

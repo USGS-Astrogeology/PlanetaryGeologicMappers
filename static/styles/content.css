@@ -121,6 +121,11 @@ div.overlay a {
 }
 
 .verticalColumn {
+  text-decoration: none;
+  color: #666;
+}
+
+.verticalColumn {
   float:left;
   width:149px;
   overflow:hidden;
@@ -128,13 +133,9 @@ div.overlay a {
   height:274px;
 }
 
-.verticalColumn a {
-  text-decoration:none;
-  color:#666;
-}
-
-.verticalColumn:hover, .verticalColumn a:hover {
+.verticalColumn:hover {
   background-color:#DDD;
+  /*text-decoration: none;*/
 }
 
 #lastColumn {
@@ -196,4 +197,12 @@ div.overlay a {
 
 div#astroConsoleKey {
   width: 200px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
