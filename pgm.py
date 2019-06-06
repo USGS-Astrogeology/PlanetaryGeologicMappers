@@ -2,7 +2,6 @@ import os
 import sys
 from functools import wraps
 from datetime import datetime
-from html.parser import HTMLParser
 
 from flask import Flask, abort, flash, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
