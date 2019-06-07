@@ -55,7 +55,9 @@ def index_handler():
     home_title = Markup(doc['title'])
     return render_template('page_template.html', content = home_markup,
                                                  title = home_title,
-                                                 menu = menu)
+                                                 menu = menu,
+                                                 rss = True)
+
 
 @WSApp.route('/Page/view/<name>', methods = ['GET'])
 def page_handler(name):
@@ -76,6 +78,14 @@ def map_handler(body):
 def map_all_handler():
     menu = Markup(db.static.find_one({'name': 'menu'})['content'])
     return render_template('map_template.html', body = 'All', menu = menu)
+
+@WSApp.route('/Review', methods = ['GET'])
+def review_handler():
+    menu = Markup(db.static.find_one({'name': 'menu'})['content'])
+    title = 'NASA/USGS Planetary Geologic Mapping Program'
+    return render_template('review.html', content = menu,
+                                            title = title,
+                                            menu = menu)
 
 @WSApp.route('/edit', methods = ['GET', 'POST'])
 @admin_required
@@ -99,12 +109,14 @@ def edit_page():
     form.page_title.data = file_title
     form.page_name.data = name
     form.page_content.data = file_markup
-    return render_template('edit.html', form = form, menu = menu)
+
+
+    return render_template('edit.html', form = form, menu = menu, rss = False)
 
 @WSApp.route('/remove', methods = ['POST'])
 @admin_required
 def remove_page():
-    name =  request.form['page'];
+    name =  request.form['page']
     doc = db.static.delete_one({'name': name})
     return redirect(url_for('edit_pages'))
 
