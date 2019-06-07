@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+{% block content %}
+  {% include 'head.html' %}
+  {% include 'header.html' %}
+
+  <h2>NASA/USGS Planetary Geologic Mapping Program</h2>
+
+  <span style="display: inline;">
+    <h3>All Mapping Projects</h3>
+    <ul id="mapping_list">
+    </ul>
+  </span>
+
+  <span style="display: inline">
+    <h3>Additional Resources</h3>
+    <ul id="other_list">
+    <ul>
+  </span>
+
+  <div class="hidden" id="parse_menu">{{ content }}</div>
+
+{% endblock %}
+</html>
+
+<script>
+  $(document).ready( function() {
+      mapping_links = $('#parse_menu #maps_section li')
+      other_links = $('#parse_menu #main_menu > li').not('#parse_menu #home_section, #parse_menu #maps_section');
+      
+      mapping_links.each( function() {
+        $('#mapping_list').append($(this));
+      })
+
+      other_links.each( function () {
+        $('#other_list').append($(this));
+      });
+
+  })
+</script>
+
+{% include 'footer.html' %}
