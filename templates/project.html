@@ -191,7 +191,7 @@
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('json_dataset_id', environment'prd',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
+    url : "{{url_for('json_dataset_id', environment='prd',dataset='pgm', target='all', protocol='WFS', ident=id)}}",
     success : function(json){
         var url2pub = json.features[0].properties['Online Publication'];
 
