@@ -185,7 +185,7 @@
   $(document).ready(function(){
     $.ajax({
     type : 'GET',
-    url : "{{url_for('json_dataset_target', environment='dev',dataset='pgm', target=body, protocol='WFS')}}",
+    url : "{{url_for('json_dataset_target', environment='prd',dataset='pgm', target=body, protocol='WFS')}}",
     success : function(json){
         test = json;
         $('#data').append('<tbody>')
