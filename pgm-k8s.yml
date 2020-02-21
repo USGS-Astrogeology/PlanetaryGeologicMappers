@@ -1,16 +1,23 @@
 ---
 
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: planetary-mapping
+
+---
+
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: pvc-pgm-db
-  namespace: development
+  name: pgm-db
+  namespace: planetary-mapping
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 128Mi
+      storage: 1Gi
 
 ---
 
@@ -18,9 +25,11 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: pgm
-  namespace: development
+  namespace: planetary-mapping
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: pgm
@@ -44,8 +53,9 @@ spec:
           volumeMounts:
             - name: pgm-secrets
               mountPath: /run/secrets
+
         - name: pgmdb
-          image: mongo:latest
+          image: mongo:4.2
           volumeMounts:
             - name: vol-pgm-db
               mountPath: /data/db
@@ -53,7 +63,7 @@ spec:
         - name: pgm-secrets
           secret: { secretName: pgm-web-secrets }
         - name: vol-pgm-db
-          persistentVolumeClaim: { claimName: pvc-pgm-db }
+          persistentVolumeClaim: { claimName: pgm-db }
 
 ---
 
@@ -61,7 +71,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: pgm
-  namespace: development
+  namespace: planetary-mapping
 spec:
   selector:
     app: pgm
@@ -77,17 +87,16 @@ kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
   name: pgm
-  namespace: development
-  annotations:
-    kubernetes.io/ingress.class: traefik
+  namespace: planetary-mapping
   labels:
     app: pgm
 spec:
   rules:
-    - host: planetarymapping-dev.wr.usgs.gov
+    - host: planetarymapping.wr.usgs.gov
       http:
         paths:
           - path: /
             backend:
               serviceName: pgm
               servicePort: http
+
